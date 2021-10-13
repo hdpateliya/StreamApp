@@ -190,7 +190,7 @@ video {
 			$("#streamId").val(id);
 		} 
 		else {
-			$("#streamId").val("stream1");
+			$("#streamId").val("live001");
 		}
 	  }
 	  
@@ -237,9 +237,9 @@ video {
 	var send = document.getElementById("send");
 	send.addEventListener("click", sendData, false);
 	
-	document.getElementById("streamId").defaultValue = "Goofy"
+	document.getElementById("streamId").defaultValue = "live001"
 	var streamIdBox = document.getElementById("streamId");
-	streamIdBox.value = "stream1";
+	streamIdBox.value = "live001";
 	
 	/**
 	 * If publishing stops for any reason, it tries to republish again.
@@ -493,14 +493,22 @@ video {
 		video : true,
 		audio : true
 	};
+	var location = "https://live.airsky.org:5443/#/applications/WebRTCAppEE";
+	
+	
+	var appName = "WebRTCAppEE"; //location.pathname.substring(0, location.pathname.lastIndexOf("/")+1);
+	//alert(appName);
 
-	var appName = location.pathname.substring(0, location.pathname.lastIndexOf("/")+1);
-	var path =  location.hostname + ":" + location.port + appName + "websocket?rtmpForward=" + rtmpForward;
+
+	//var path =  location.hostname + ":" + location.port + appName + "websocket?rtmpForward=" + rtmpForward;
+	var path =  "live.airsky.org:5443/WebRTCAppEE/websocket?rtmpForward=true";
 	var websocketURL =  "ws://" + path;
 	
-	if (location.protocol.startsWith("https")) {
+	/*if (location.protocol.startsWith("https")) {
 		websocketURL = "wss://" + path;
-	}
+	}*/
+
+	alert(websocketURL);
 
 	var	webRTCAdaptor = null;
 	var selectedRadio = null;
