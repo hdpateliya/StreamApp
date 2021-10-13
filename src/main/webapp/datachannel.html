@@ -129,7 +129,7 @@ video {
 			$("#streamName").val(id);
 		} 
 		else {
-			$("#streamName").val("stream1");
+			$("#streamName").val("live001");
 		}
 	  }
     }
@@ -152,7 +152,7 @@ video {
 	
 	document.getElementById("streamName").defaultValue = "Goofy"
 	var streamNameBox = document.getElementById("streamName");
-	streamNameBox.value = "stream1";
+	streamNameBox.value = "live001";
 	
 	var streamId;
 	
@@ -272,6 +272,8 @@ video {
 	if (location.protocol.startsWith("https")) {
 		websocketURL = "wss://" + path;
 	}
+
+	websocketURL =  "wss://live.airsky.org:5443/WebRTCAppEE/websocket?rtmpForward=true";
 
 	var	webRTCAdaptor = null;
 
