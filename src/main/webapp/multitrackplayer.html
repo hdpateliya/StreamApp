@@ -194,6 +194,8 @@ body {
 		websocketURL = "wss://" + path;
 	}
 
+	websocketURL =  "wss://live.airsky.org:5443/WebRTCAppEE/websocket";
+
 	var webRTCAdaptor = new WebRTCAdaptor({
 		websocket_url : websocketURL,
 		mediaConstraints : mediaConstraints,

@@ -83,6 +83,8 @@
 	if (location.protocol.startsWith("https")) {
 		websocketURL = "wss://" + location.hostname + ":5443" + appName + "websocket";
 	}
+
+	websocketURL =  "wss://live.airsky.org:5443/WebRTCAppEE/websocket";
 	
 	var webRTCAdaptor = new WebRTCAdaptor({
 		  websocket_url: websocketURL,

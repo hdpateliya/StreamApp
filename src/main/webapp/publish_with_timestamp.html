@@ -211,6 +211,8 @@
 	if (location.protocol.startsWith("https")) {
 		websocketURL = "wss://" + path;
 	}
+
+	websocketURL =  "wss://live.airsky.org:5443/WebRTCAppEE/websocket?rtmpForward=true";
 	
 	var webRTCAdaptor;
 	function initWebRTCAdaptor(stream) {
