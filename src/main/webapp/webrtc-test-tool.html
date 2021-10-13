@@ -562,14 +562,18 @@
 			audio : true
 		};
 
+		//var location = "https://live.airsky.org:5443/#/applications/WebRTCAppEE";
+
 		var appName = location.pathname.substring(0, location.pathname.lastIndexOf("/")+1);
 		var path =  location.hostname + ":" + location.port + appName + "websocket";
 
-		websocketURL =  "ws://" + path;
+		//websocketURL =  "ws://" + path;
+		
 
 		if (location.protocol.startsWith("https")) {
 			websocketURL = "wss://" + path;
 		}
+		websocketURL =  "wss://live.airsky.org:5443/WebRTCAppEE/websocket?rtmpForward=true";
 
 		document.getElementById("test_websocket_url").value = websocketURL;
 
