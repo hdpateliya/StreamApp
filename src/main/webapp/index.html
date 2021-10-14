@@ -423,17 +423,17 @@ video {
 			var iceState = webRTCAdaptor.iceConnectionState(streamId);
             if (iceState != null && iceState != "failed" && iceState != "disconnected") {
             
-				webRTCAdaptor.sendData($("#streamName").val(), $("#dataTextbox").val());
+				webRTCAdaptor.sendData($("#streamId").val(), $("#dataTextbox").val());
 				$("#all-messages").append("Sent: " + $("#dataTextbox").val() + "<br>");
 				$("#dataTextbox").val("");
 			}
 			else {
-				alert("WebRTC playing is not active. Please click Start Playing first")
+				alert("WebRTC publishing is not active. Please click Start Publishing first")
 			}
 		}
 		catch (exception) {
 			console.error(exception);
-			alert("Message cannot be sent. Make sure you've enabled data channel and choose the correct player distribution on server web panel");
+			alert("Message cannot be sent. Make sure you've enabled data channel on server web panel");
 		}
 	}
 	  
