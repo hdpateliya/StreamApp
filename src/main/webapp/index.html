@@ -666,7 +666,7 @@ video {
 						$("#stats_panel").show();
 	
 					}
-					else if (info == "data_received") {
+					/*else if (info == "data_received") {
 						var data = obj.data;
 						if (data instanceof ArrayBuffer) {
 							handleImageData(data);
@@ -674,6 +674,16 @@ video {
 						else {
 							$("#all-messages").append("Received: " + data + "<br>");
 						}
+					}*/
+					else if (info == "data_received") {
+						var data = obj.data;
+						alert(data);
+						if (data instanceof ArrayBuffer) {
+		                	handleImageData(data);
+		              	}
+					  	else {
+							$("#all-messages").append("Received: " + data + "<br>");
+					  	}
 					}
 					else if (info == "available_devices") {
 						var videoHtmlContent = "";
