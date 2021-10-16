@@ -198,7 +198,7 @@ video {
 			var iceState = webRTCAdaptor.iceConnectionState(streamId);
             if (iceState != null && iceState != "failed" && iceState != "disconnected") {
             	
-            	var messageObject = { messageId: Math.random().toString(36).substr(2, 5), messageDate: Math.round((new Date()).getTime() / 1000), senderName: "Test User" , messageBody: $("#dataTextbox").val() };
+            	var messageObject = { messageId: Math.random().toString(36).substr(2, 5), messageDate: Math.round((new Date()).getTime() / 1000), senderId: "1", senderName: "Test User" , messageBody: $("#dataTextbox").val() };
   				
 
 				webRTCAdaptor.sendData($("#streamName").val(), JSON.stringify(messageObject));
@@ -352,7 +352,7 @@ video {
 		                	handleImageData(data);
 		              	}
 					  	else {
-							$("#dataMessagesTextarea").append("Received: " + JSON.stringify(obj) + "\r\n");
+							$("#dataMessagesTextarea").append("Received: " + data.messageBody + "\r\n");
 					  	}
 					}
 
