@@ -1829,6 +1829,7 @@ export class WebRTCAdaptor
 		var sent = 0;
 
 		if(typeof data === 'string' || data instanceof String){
+			console.log("log " + data);
 			dataChannel.send(data);
 		}
 		else {

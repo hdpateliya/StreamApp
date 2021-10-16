@@ -230,8 +230,13 @@ video {
 		try {
 			var iceState = webRTCAdaptor.iceConnectionState(streamId);
             if (iceState != null && iceState != "failed" && iceState != "disconnected") {
+
+
+            	var messageObject = { messageId: Math.random().toString(36).substr(2, 5), messageDate: Math.round((new Date()).getTime() / 1000), senderName: "Test User" , messageBody: $("#dataTextbox").val() };
+  				
+
+				webRTCAdaptor.sendData($("#streamName").val(), JSON.stringify(messageObject));
             
-				webRTCAdaptor.sendData($("#streamName").val(), $("#dataTextbox").val());
 				$("#all-messages").append("Sent: " + $("#dataTextbox").val() + "<br>");
 				$("#dataTextbox").val("");
 			}
@@ -526,12 +531,12 @@ video {
 				 
 			}
 			else if (info == "data_received") {
-				var data = obj.data;
+				var data = JSON.parse(obj.data);
 				if (data instanceof ArrayBuffer) {
                 	handleImageData(data);
               	}
 			  	else {
-					$("#all-messages").append("Received: " + data + "<br>");
+					$("#all-messages").append("Received: " + data.messageBody + "<br>");
 			  	}
 			}
 			else if (info == "bitrateMeasurement") {
