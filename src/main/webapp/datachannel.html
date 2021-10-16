@@ -347,10 +347,11 @@ video {
 
 					else if (info == "data_received") {
 
-						var data = obj.data;
+						var data = JSON.parse(obj.data);
 						if (data instanceof ArrayBuffer) {
 		                	handleImageData(data);
 		              	}
+
 					  	else {
 							$("#dataMessagesTextarea").append("Received: " + data.messageBody + "\r\n");
 					  	}
