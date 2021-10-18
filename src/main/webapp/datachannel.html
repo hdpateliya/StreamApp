@@ -84,6 +84,8 @@ video {
 					</div>
 					<div class="form-group col-sm-2">
 					<button type="button" id="send" class="btn btn-outline-primary btn-block">Send</button>
+
+					<button type="button" id="poll_test" class="btn btn-outline-primary btn-block">Poll Test</button>
 					</div>
 				</div>
 			</div>
@@ -149,6 +151,10 @@ video {
 	disconnect_channel_button.addEventListener("click", disconnectChannel, false);
 	var send = document.getElementById("send");
 	send.addEventListener("click", sendData, false);
+
+
+	var poll_test = document.getElementById("poll_test");
+	poll_test.addEventListener("click", sendPollData, false);
 	
 	document.getElementById("streamName").defaultValue = "Goofy"
 	var streamNameBox = document.getElementById("streamName");
@@ -198,11 +204,58 @@ video {
 			var iceState = webRTCAdaptor.iceConnectionState(streamId);
             if (iceState != null && iceState != "failed" && iceState != "disconnected") {
             	
-            	var messageObject = { messageId: Math.random().toString(36).substr(2, 5), messageDate: Math.round((new Date()).getTime() / 1000), senderId: "1", senderName: "Test User" , messageBody: $("#dataTextbox").val() };
+            	var messageObject = { 
+            		messageId: Math.random().toString(36).substr(2, 5), 
+            		messageDate: Math.round((new Date()).getTime() / 1000), 
+            		senderId: "1", 
+            		senderName: "Test User",
+            		senderImg: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
+					messageBody: $("#dataTextbox").val(),
+					type: "message",
+					rawData : []
+
+            	};
+  				
+				webRTCAdaptor.sendData($("#streamName").val(), JSON.stringify(messageObject));
+				$("#dataMessagesTextarea").append("Sent: " + $("#dataTextbox").val() + "\r\n");
+				$("#dataTextbox").val("");
+			}
+			else {
+				alert("WebRTC publishing is not active. Please click Start Publishing first")
+			}
+		}
+		catch (exception) {
+			console.error(exception);
+			alert("Message cannot be sent. Make sure you've enabled data channel on server web panel");
+		}
+	}
+
+
+	function sendPollData() {
+		try {
+			var iceState = webRTCAdaptor.iceConnectionState(streamId);
+            if (iceState != null && iceState != "failed" && iceState != "disconnected") {
+            	
+            	var messageObject = { 
+            		messageId: Math.random().toString(36).substr(2, 5), 
+            		messageDate: Math.round((new Date()).getTime() / 1000), 
+            		senderId: "1", 
+            		senderName: "Test User",
+            		senderImg: "https://cdn-icons-png.flaticon.com/512/147/147144.png",
+					messageBody: "",
+					type: "poll_question",
+					rawData : {
+						poll_id: "1",
+						poll_question: "Test Poll Question",
+						options: ["A", "B", "C", "D"],
+						time: "30000"
+					}
+
+            	};
   				
 
 				webRTCAdaptor.sendData($("#streamName").val(), JSON.stringify(messageObject));
-				$("#dataMessagesTextarea").append("Sent: " + $("#dataTextbox").val() + "\r\n");
+				$("#dataMessagesTextarea").append(JSON.stringify(messageObject) + "\r\n");
 				$("#dataTextbox").val("");
 			}
 			else {
@@ -348,13 +401,23 @@ video {
 					else if (info == "data_received") {
 
 						var data = JSON.parse(obj.data);
-						if (data instanceof ArrayBuffer) {
+
+						if(data.type == "poll_answer")
+						{
+							$("#dataMessagesTextarea").append("Poll Answer: " + data.rawData.answer + "\r\n");
+						}
+						else
+						{
+							$("#dataMessagesTextarea").append("Received: " + data.messageBody + "\r\n");
+						}
+						
+						/*if (data instanceof ArrayBuffer) {
 		                	handleImageData(data);
 		              	}
 
 					  	else {
 							$("#dataMessagesTextarea").append("Received: " + data.messageBody + "\r\n");
-					  	}
+					  	}*/
 					}
 
 					else {
